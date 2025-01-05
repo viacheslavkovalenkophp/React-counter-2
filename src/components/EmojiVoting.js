@@ -1,55 +1,53 @@
-import React, { useState, useEffect } from 'react';
-import '../App.css';
+import React, { useState } from 'react';
 
-const emojis = ['😊', '😂', '😍', '😎', '😜'];
+const emojis = [
+    { id: 1, symbol: "😀", votes: 0 },
+    { id: 2, symbol: "😃", votes: 0 },
+    { id: 3, symbol: "😅", votes: 0 },
+    { id: 4, symbol: "🤣", votes: 0 },
+];
 
 const EmojiVoting = () => {
-    const [votes, setVotes] = useState([]);
+    const [emojiVotes, setEmojiVotes] = useState(emojis);
 
-    useEffect(() => {
-        const storedVotes = JSON.parse(localStorage.getItem('votes'));
-        if (storedVotes) {
-            setVotes(storedVotes);
-        } else {
-            setVotes(Array(emojis.length).fill(0));
-        }
-    }, []);
+    const handleVote = (id) => {
+        setEmojiVotes((prevVotes) =>
+            prevVotes.map((emoji) =>
+                emoji.id === id ? { ...emoji, votes: emoji.votes + 1 } : emoji
+            )
+        );
+    };
 
-    useEffect(() => {
-        localStorage.setItem('votes', JSON.stringify(votes));
-    }, [votes]);
-
-    const handleVote = (index) => {
-        const newVotes = [...votes];
-        newVotes[index] += 1;
-        setVotes(newVotes);
+    const handleClear = () => {
+        setEmojiVotes(emojis);
     };
 
     const getWinner = () => {
-        const maxVotes = Math.max(...votes);
-        const winnerIndex = votes.indexOf(maxVotes);
-        return emojis[winnerIndex];
-    };
-
-    const clearResults = () => {
-        setVotes(Array(emojis.length).fill(0));
-        localStorage.removeItem('votes');
+        const maxVotes = Math.max(...emojiVotes.map((emoji) => emoji.votes));
+        return emojiVotes.find((emoji) => emoji.votes === maxVotes);
     };
 
     return (
-        <div>
-            <h1>Vote for Your Favorite Emoji!</h1>
-            <div>
-                {emojis.map((emoji, index) => (
-                    <button key={index} onClick={() => handleVote(index)}>
-                        {emoji} ({votes[index]})
-                    </button>
+        <div className="emoji-voting">
+            <h1>Emoji Voting</h1>
+            <div className="emojis">
+                {emojiVotes.map((emoji) => (
+                    <div key={emoji.id} className="emoji">
+            <span className="emoji-symbol" onClick={() => handleVote(emoji.id)}>
+              {emoji.symbol}
+            </span>
+                        <span className="emoji-votes">Votes: {emoji.votes}</span>
+                    </div>
                 ))}
             </div>
-            <div>
-                <h2>Winner: {getWinner()}</h2>
+            <div className="results">
+                <button onClick={handleClear}>Очистити результати</button>
+                {getWinner() && (
+                    <div className="winner">
+                        <h2>Переможець: {getWinner().symbol}</h2>
+                    </div>
+                )}
             </div>
-            <button onClick={clearResults}>Clear Results</button>
         </div>
     );
 };
