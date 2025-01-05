@@ -1,61 +1,40 @@
-import React, { useState } from 'react';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
 
 const HomePage = () => {
-    const [tasks, setTasks] = useState([]);
-    const [newTask, setNewTask] = useState('');
-
-    const addTask = () => {
-        if (newTask.trim() === '') return;
-        const task = { text: newTask, completed: false };
-        setTasks([...tasks, task]);
-        setNewTask('');
-    };
-
-    const toggleTask = (index) => {
-        const updatedTasks = tasks.map((task, i) =>
-            i === index ? { ...task, completed: !task.completed } : task
-        );
-        setTasks(updatedTasks);
-    };
-
-    const deleteTask = (index) => {
-        setTasks(tasks.filter((_, i) => i !== index));
-    };
-
     return (
         <div>
-            <h2>Главная страница</h2>
-            <ul id="myList" className="ul">
-                {tasks.map((task, index) => (
-                    <li
-                        key={index}
-                        className={`task ${task.completed ? 'line' : ''}`}
-                        onClick={() => toggleTask(index)}
-                    >
-                        {task.text}
-                        <button
-                            className="delete-button"
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                deleteTask(index);
-                            }}
-                        >
-                            Удалить
+            <h2>TODO List</h2>
+            <Formik
+                initialValues={{ task: '' }}
+                validationSchema={Yup.object({
+                    task: Yup.string()
+                        .min(5, 'Минимальная длина задачи — 5 символов')
+                        .required('Это поле обязательно'),
+                })}
+                onSubmit={(values, { resetForm }) => {
+                    console.log('Новая задача:', values.task);
+                    resetForm();
+                }}
+            >
+                {({ isSubmitting }) => (
+                    <Form>
+                        <Field
+                            type="text"
+                            name="task"
+                            placeholder="Введите задачу"
+                        />
+                        <ErrorMessage
+                            name="task"
+                            component="div"
+                            style={{ color: 'red' }}
+                        />
+                        <button type="submit" disabled={isSubmitting}>
+                            Добавить
                         </button>
-                    </li>
-                ))}
-            </ul>
-            <div className="point">
-                <input
-                    id="input"
-                    value={newTask}
-                    onChange={(e) => setNewTask(e.target.value)}
-                    placeholder="Введите задачу"
-                />
-                <button id="button" onClick={addTask}>
-                    Добавить
-                </button>
-            </div>
+                    </Form>
+                )}
+            </Formik>
         </div>
     );
 };

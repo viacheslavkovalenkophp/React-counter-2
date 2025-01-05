@@ -1,20 +1,131 @@
-.app {
+body {
+  margin: 0;
   font-family: Arial, sans-serif;
+  background-color: #f0f4f8;
+  color: #333;
+}
+
+.app {
+  max-width: 600px;
+  margin: 0 auto;
   padding: 20px;
-}
-
-.app.light {
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   background-color: white;
-  color: black;
-}
-
-.app.dark {
-  background-color: #333;
-  color: white;
+  border-radius: 8px;
 }
 
 header {
+  display: flex;
+  justify-content: flex-end;
   margin-bottom: 20px;
+}
+
+header button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+header button:hover {
+  background-color: #0056b3;
+}
+
+h2 {
+  text-align: center;
+  color: #007bff;
+}
+
+form {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+form input {
+  flex: 1;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+form button {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+form button:hover {
+  background-color: #218838;
+}
+
+form div {
+  margin-top: 5px;
+  font-size: 12px;
+  color: red;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+ul li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  transition: background-color 0.2s;
+}
+
+ul li:hover {
+  background-color: #f1f1f1;
+}
+
+ul li button {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+ul li button:hover {
+  background-color: #c82333;
+}
+
+/* Общие стили */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.app {
+  transition: background-color 0.3s, color 0.3s;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: #f0f0f0;
+  border-bottom: 1px solid #ccc;
 }
 
 nav a {
@@ -24,16 +135,36 @@ nav a {
 }
 
 button {
-  margin-left: 20px;
-}
-.line {
-   text-decoration: line-through red;
- }
-
-.ul:hover {
   cursor: pointer;
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: white;
+  color: black;
 }
 
-.point {
-  position: fixed; top: 10px; right: 10px;
+/* Светлая тема */
+.app.light {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+/* Темная тема */
+.app.dark {
+  background-color: #333333;
+  color: #ffffff;
+}
+
+button:hover {
+  background-color: #ddd;
+}
+
+/* Темная тема для кнопки */
+.app.dark button {
+  background-color: #444;
+  color: white;
+}
+
+.app.dark button:hover {
+  background-color: #555;
 }
