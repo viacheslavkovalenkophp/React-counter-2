@@ -1,34 +1,21 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-import HomePage from './pages/HomePage';
-import './App.css';
+import React from 'react';
+import { Provider } from 'react-redux';
+import { store } from './store/store';
+import AddTodo from './components/AddTodo';
+import TodoFooter from './components/TodoFooter';
+import TodoList from './components/TodoList'; // Импортируем компонент
 
-function App() {
-    const [theme, setTheme] = useState('light'); // Тема: 'light' или 'dark'
-
-    const toggleTheme = () => {
-        setTheme(theme === 'light' ? 'dark' : 'light'); // Переключение темы
-    };
-
+const App = () => {
     return (
-        <Router>
-            <div className={`app ${theme}`}> {/* Применяем класс темы */}
-                <header>
-                    <nav>
-                        <Link to="/">Главная</Link>
-                        <button onClick={toggleTheme}>
-                            {theme === 'light' ? 'Темная тема' : 'Светлая тема'}
-                        </button>
-                    </nav>
-                </header>
-                <main>
-                    <Routes>
-                        <Route path="/" element={<HomePage />} />
-                    </Routes>
-                </main>
+        <Provider store={store}>
+            <div>
+                <h1>TODO App</h1>
+                <AddTodo />
+                <TodoList /> {/* Добавляем отображение списка задач */}
+                <TodoFooter />
             </div>
-        </Router>
+        </Provider>
     );
-}
+};
 
 export default App;
