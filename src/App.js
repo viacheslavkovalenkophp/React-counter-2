@@ -1,20 +1,24 @@
 import React from 'react';
-import { Provider } from 'react-redux';
-import { store } from './store/store';
-import AddTodo from './components/AddTodo';
-import TodoFooter from './components/TodoFooter';
-import TodoList from './components/TodoList'; // Импортируем компонент
+import { useDispatch, useSelector } from 'react-redux';
+import { addTodo, clearTodos } from './redux/actions/todoActions';
 
 const App = () => {
+    const dispatch = useDispatch();
+    const todos = useSelector((state) => state.todo?.todos || []);
+
     return (
-        <Provider store={store}>
-            <div>
-                <h1>TODO App</h1>
-                <AddTodo />
-                <TodoList /> {/* Добавляем отображение списка задач */}
-                <TodoFooter />
-            </div>
-        </Provider>
+        <div>
+            <h1>Todo App</h1>
+            <button onClick={() => dispatch(addTodo('Test Todo'))}>Add Todo</button>
+            <button onClick={() => dispatch(clearTodos())}>Clear Todos</button>
+            <ul>
+                {todos.length > 0 ? (
+                    todos.map((todo, index) => <li key={index}>{todo}</li>)
+                ) : (
+                    <p>No todos available</p>
+                )}
+            </ul>
+        </div>
     );
 };
 
