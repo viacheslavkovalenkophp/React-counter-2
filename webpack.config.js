@@ -49,7 +49,7 @@ module.exports = {
         static: {
             directory: path.join(__dirname, 'dist'),
         },
-        port: 3002,
+        port: 3000,
     },
     watchOptions: {
         ignored: /node_modules/,

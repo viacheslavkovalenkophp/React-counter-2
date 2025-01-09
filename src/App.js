@@ -1,25 +1,17 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { addTodo, clearTodos } from './redux/actions/todoActions';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Home from '../src/pages/Home.js';
+import SWAPI from '../src/pages/SWAPI.js';
 
-const App = () => {
-    const dispatch = useDispatch();
-    const todos = useSelector((state) => state.todo?.todos || []);
-
+function App() {
     return (
-        <div>
-            <h1>Todo App</h1>
-            <button onClick={() => dispatch(addTodo('Test Todo'))}>Add Todo</button>
-            <button onClick={() => dispatch(clearTodos())}>Clear Todos</button>
-            <ul>
-                {todos.length > 0 ? (
-                    todos.map((todo, index) => <li key={index}>{todo}</li>)
-                ) : (
-                    <p>No todos available</p>
-                )}
-            </ul>
-        </div>
+        <Router>
+            <Routes>
+                <Route path="/" element={<Home />} />  {}
+                <Route path="/swapi" element={<SWAPI />} />  {}
+            </Routes>
+        </Router>
     );
-};
+}
 
 export default App;
